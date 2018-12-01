@@ -23,14 +23,16 @@ def webhook():
     sender = data['name']
 
     if text.startswith(os.getenv('TRIGGER_ADD')):
-      msg = add_bookmark(sender, text)
+      msg = add_bookmark(sender, text[len(os.getenv('TRIGGER_ADD')) + 1:])
     elif text.startswith(os.getenv('TRIGGER_SHOW')):
-      bookmark = find_bookmark(text)
+      bookmark = find_bookmark(text[len(os.getenv('TRIGGER_SHOW')) + 1:])
       msg = bookmark['name'] + ": " + bookmark['text']
     elif text.startswith(os.getenv('TRIGGER_ALL')):
       bookmarks = get_db().saved.find({})
       for bookmark in bookmarks:
         msg += bookmark['name'] + ": " + bookmark['text'] + '\n'
+    elif text.startswith(os.getenv('TRIGGER_DELETE')):
+      msg = delete_bookmark(text[len(os.getenv('TRIGGER_DELETE')) + 1:])
     else: # save all messages that are not commands
       save_message(sender, text)
 
@@ -39,10 +41,9 @@ def webhook():
     send_message(msg)
   return "ok", 200
 
-# Extracts relevant text and saves to db
-def add_bookmark(sender, full_text):
+# Bookmarks a string within double quotes or an older message if w/o quotes
+def add_bookmark(sender, text):
   db = get_db()
-  text = full_text[len(os.getenv('TRIGGER_ADD')) + 1:]
   name = sender
   if text.startswith("\""):
     text = text[1:-1]
@@ -58,12 +59,17 @@ def add_bookmark(sender, full_text):
   db.saved.insert_one(doc)
   return 'Saved. 🎉'
 
-# Extracts relevant text and finds the latest bookmark that contains the given text
-def find_bookmark(full_text):
-  text = full_text[len(os.getenv('TRIGGER_SHOW')) + 1:]
-  db = get_db()
+# Finds the latest bookmark that contains the given text
+def find_bookmark(text):
   regx = re.compile(".*" + text + ".*", re.IGNORECASE)
-  return db.saved.find_one({ 'text': {'$regex': regx} }, sort=[('timestamp', -1)])
+  return get_db().saved.find_one({ 'text': {'$regex': regx} }, sort=[('timestamp', -1)])
+
+# Finds a saved bookmark that contains the given substring and then deletes it
+def delete_bookmark(text):
+  bookmark = find_bookmark(text)
+  get_db().saved.delete_one({ 'text': bookmark['text'] }, sort=[('timestamp', -1)])
+  short_text = bookmark['text'] if len(bookmark['text']) < 50 else bookmark['text'][:50]
+  return 'Deleted bookmark: ' + short_text 
 
 # Adds message to database, deleting all the ones older than 24h
 def save_message(sender, text):
