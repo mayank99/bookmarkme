@@ -67,7 +67,7 @@ def find_bookmark(text):
 # Finds a saved bookmark that contains the given substring and then deletes it
 def delete_bookmark(text):
   bookmark = find_bookmark(text)
-  get_db().saved.delete_one({ 'text': bookmark['text'] }, sort=[('timestamp', -1)])
+  get_db().saved.delete_one({ 'text': bookmark['text'] })
   short_text = bookmark['text'] if len(bookmark['text']) < 50 else bookmark['text'][:50]
   return 'Deleted bookmark: ' + short_text 
 
