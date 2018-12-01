@@ -25,7 +25,7 @@ def webhook():
     if text.startswith(os.getenv('TRIGGER_ADD')):
       add_bookmark(text)
       msg = 'Saved. 🎉'
-    else if text.startswith(os.getenv('TRIGGER_SHOW')):
+    elif text.startswith(os.getenv('TRIGGER_SHOW')):
       msg = find_bookmark(text)
     else: # save all messages that are not commands
       save_message(text)
