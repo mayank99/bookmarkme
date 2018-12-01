@@ -50,7 +50,7 @@ def find_message(text):
 # Returns the MongoDB instance
 def get_db():
   uri = os.getenv('MONGODB_URI')
-  db_name = uri[uri.index('/') + 1 : uri.index(':', 10)]
+  db_name = uri[uri.index('/') + 2 : uri.index(':', 10)]
   client = MongoClient(uri)
   return client[db_name]
 
