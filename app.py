@@ -30,7 +30,8 @@ def webhook():
     elif text.startswith(os.getenv('TRIGGER_ALL')):
       bookmarks = get_db().saved.find({})
       for bookmark in bookmarks:
-        msg += bookmark['name'] + ": " + bookmark['text'][:20] + '\n'
+        short_text =  bookmark['text'] if len(bookmark['text']) < 20 else bookmark['text'][:20] + '...'
+        msg += bookmark['name'] + ": " + short_text + '\n'
     elif text.startswith(os.getenv('TRIGGER_DELETE')):
       msg = delete_bookmark(text[len(os.getenv('TRIGGER_DELETE')) + 1:])
     else: # save all messages that are not commands
