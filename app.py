@@ -52,7 +52,8 @@ def add_bookmark(sender, text):
     text = message['text']
     name = message['name']
 
-  if find_bookmark(text)['text'] == text:
+  saved = find_bookmark(text)
+  if saved != None and saved['text'] == text:
     return 'That one was already saved. 😕'
 
   doc = { 'text': text, 'name': name, 'timestamp': str(time.time()) }
