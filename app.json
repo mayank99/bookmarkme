@@ -5,7 +5,7 @@
   "keywords": ["bookmark", "python", "bot", "groupme"],
   "env": {
     "BOT_ID": {
-      "description": "The bot ID from GroupMe dev portal"
+      "description": "The bot ID from GroupMe dev portal (after you create a bot)"
     },
     "BOT_NAME": {
       "description": "The bot name that appears in the chat",
