@@ -28,7 +28,7 @@ def webhook():
       msg = 'Saved. 🎉'
     elif text.startswith(os.getenv('TRIGGER_SHOW')):
       bookmark = find_bookmark(text)
-      mes = bookmark['name'] + ": " + bookmark['text']
+      msg = bookmark['name'] + ": " + bookmark['text']
     else: # save all messages that are not commands
       save_message(sender, text)
 
