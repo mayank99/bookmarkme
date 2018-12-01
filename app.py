@@ -4,6 +4,7 @@ import random
 import sys
 import requests
 import re
+import time
 
 import xmltodict
 from flask import Flask, request, jsonify
@@ -33,13 +34,14 @@ def add_bookmark(full_text):
   text = full_text[len(os.getenv('TRIGGER_ADD')) + 1:]
   save_message(text)
 
-# Add message to database, deleting all the ones older than 24h
+# Adds message to database, deleting all the ones older than 24h
 def save_message(text):
   db = get_db()
   doc = { 'text': text, 'timestamp': str(time.time()) }
   db.messages.insert_one(doc)
   db.messages.remove({'timestamp': { '$lt': str(time.time() - 86400) } })
 
+# Finds the last message that contains the given substring
 def find_message(text):
   db = get_db()
   regx = re.compile(".*" + text + ".*", re.IGNORECASE)
@@ -52,7 +54,7 @@ def get_db():
   client = MongoClient(uri)
   return client.db_name
 
-# Send the chosen message to the chat
+# Sends the chosen message to the chat
 def send_message(msg):
   url  = 'https://api.groupme.com/v3/bots/post'
   data = {
