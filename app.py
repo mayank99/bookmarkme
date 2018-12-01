@@ -37,7 +37,7 @@ def webhook():
       save_message(sender, text)
 
   if msg != '':
-    time.sleep(0.25)
+    time.sleep(0.5)
     send_message(msg)
   return "ok", 200
 
