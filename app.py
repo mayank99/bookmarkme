@@ -18,21 +18,36 @@ app = Flask(__name__)
 def webhook():
   data = request.get_json()
   log('Recieved {}'.format(data))
-  
   msg = ''
   if data['name'] != os.getenv('BOT_NAME'):
     text = data['text'].lower()
+
     if text.startswith(os.getenv('TRIGGER_ADD')):
       add_bookmark(text)
-    # if text.startswith(os.getenv('TRIGGER_SHOW')):
-    msg = 'ok'
-  send_message(msg)
+      msg = 'Saved. 🎉'
+    else if text.startswith(os.getenv('TRIGGER_SHOW')):
+      msg = find_bookmark(text)
+    else: # save all messages that are not commands
+      save_message(text)
+
+  if msg != '':
+    send_message(msg)
   return "ok", 200
 
 # Extracts relevant text and saves to db
 def add_bookmark(full_text):
   text = full_text[len(os.getenv('TRIGGER_ADD')) + 1:]
-  save_message(text)
+  # save_message(text)
+  db = get_db()
+  doc = { 'text': text, 'timestamp': str(time.time()) }
+  db.saved.insert_one(doc)
+
+# Extracts relevant text and finds the latest bookmark that contains the given text
+def find_bookmark(full_text):
+  text = full_text[len(os.getenv('TRIGGER_SHOW')) + 1:]
+  db = get_db()
+  regx = re.compile(".*" + text + ".*", re.IGNORECASE)
+  return db.saved.find_one({ 'text': {'$regex': regx} }, sort=[('timestamp', -1)])
 
 # Adds message to database, deleting all the ones older than 24h
 def save_message(text):
