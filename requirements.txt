@@ -1,0 +1,5 @@
+Flask
+gunicorn==19.6.0
+xmltodict
+requests
+pymongo
