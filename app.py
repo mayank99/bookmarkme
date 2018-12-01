@@ -30,7 +30,7 @@ def webhook():
       bookmark = find_bookmark(text)
       msg = bookmark['name'] + ": " + bookmark['text']
     elif text.startswith(os.getenv('TRIGGER_ALL')):
-      bookmarks = get_db().find({})
+      bookmarks = get_db().saved.find({})
       for bookmark in bookmarks:
         msg += bookmark['name'] + ": " + bookmark['text'] + '\n'
     else: # save all messages that are not commands
