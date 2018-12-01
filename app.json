@@ -1,0 +1,33 @@
+{
+  "name": "BookmarkMe Bot",
+  "description": "A GroupMe chatbot that allows you to bookmark messages for later viewing.",
+  "repository": "https://github.com/mayank99/bookmarkme",
+  "keywords": ["bookmark", "python", "bot", "groupme"],
+  "env": {
+    "BOT_ID": {
+      "description": "The bot ID from GroupMe dev portal",
+      "value": "default"
+    },
+    "BOT_NAME": {
+      "description": "The bot name that appears in the chat",
+      "value": "BookmarkMe bot"
+    },
+    "TRIGGER_ADD": {
+      "description": "The prefix used to bookmark a message",
+      "value": ":save"
+    },
+    "TRIGGER_ALL": {
+      "description": "The keyword used to show all saved bookmarks",
+      "value": ":all"
+    },
+    "TRIGGER_DELETE": {
+      "description": "The prefix used to delete a bookmark",
+      "value": ":delete"
+    },
+    "TRIGGER_SHOW": {
+      "description": "The prefix used to display a saved bookmark",
+      "value": ":show"
+    }
+  },
+  "addons": ["mongolab"]
+}
