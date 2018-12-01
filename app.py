@@ -50,9 +50,9 @@ def add_bookmark(sender, full_text):
     message = find_message(text)
     text = message['text']
     name = message['name']
-    if find_message(text)['text'] == text:
-      return 'That one was already saved. 😕'
 
+  if find_message(text)['text'] == text:
+    return 'That one was already saved. 😕'
 
   doc = { 'text': text, 'name': name, 'timestamp': str(time.time()) }
   db.saved.insert_one(doc)
