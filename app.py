@@ -20,7 +20,7 @@ def webhook():
   log('Recieved {}'.format(data))
   msg = ''
   if data['name'] != os.getenv('BOT_NAME'):
-    text = data['text'].lower()
+    text = data['text']
     sender = data['name']
 
     if text.startswith(os.getenv('TRIGGER_ADD')):
