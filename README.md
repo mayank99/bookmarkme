@@ -1,7 +1,7 @@
 # BookmarkMe bot
 A GroupMe chatbot that allows you to bookmark messages
 
-### Use the floof bot in your own chat
+### Use the BookmarkMe bot in your own chat
 There are a few simple steps involved here.
 1. Deploy the app to Heroku using the button below. Give it a memorable name; we will need it later.
 
