@@ -30,14 +30,14 @@ def webhook():
     elif text.startswith(os.getenv('TRIGGER_ALL')):
       bookmarks = get_db().saved.find({})
       for bookmark in bookmarks:
-        msg += bookmark['name'] + ": " + bookmark['text'] + '\n'
+        msg += bookmark['name'] + ": " + bookmark['text'][:20] + '\n'
     elif text.startswith(os.getenv('TRIGGER_DELETE')):
       msg = delete_bookmark(text[len(os.getenv('TRIGGER_DELETE')) + 1:])
     else: # save all messages that are not commands
       save_message(sender, text)
 
   if msg != '':
-    time.sleep(0.5)
+    # time.sleep(0.5)
     send_message(msg)
   return "ok", 200
 
@@ -70,7 +70,7 @@ def find_bookmark(text):
 def delete_bookmark(text):
   bookmark = find_bookmark(text)
   get_db().saved.delete_one({ 'text': bookmark['text'] })
-  short_text = bookmark['text'] if len(bookmark['text']) < 50 else bookmark['text'][:50]
+  short_text = bookmark['text'] if len(bookmark['text']) < 50 else bookmark['text'][:50] + '...'
   return 'Deleted bookmark: ' + short_text 
 
 # Adds message to database, deleting all the ones older than 24h
