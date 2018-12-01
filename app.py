@@ -17,8 +17,8 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def webhook():
   data = request.get_json()
-  log('Recieved {}'.format(data))
   msg = ''
+
   if data['name'] != os.getenv('BOT_NAME'):
     text = data['text']
     sender = data['name']
@@ -37,6 +37,7 @@ def webhook():
       save_message(sender, text)
 
   if msg != '':
+    time.sleep(1)
     send_message(msg)
   return "ok", 200
 
