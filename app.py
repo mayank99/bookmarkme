@@ -61,8 +61,9 @@ def add_bookmark(sender, text):
 
 # Finds the latest bookmark that contains the given text
 def find_bookmark(text):
+  db = get_db()
   regx = re.compile(".*" + text + ".*", re.IGNORECASE)
-  return get_db().saved.find_one({ 'text': {'$regex': regx} }, sort=[('timestamp', -1)])
+  return db.saved.find_one({ 'text': {'$regex': regx} }, sort=[('timestamp', -1)])
 
 # Finds a saved bookmark that contains the given substring and then deletes it
 def delete_bookmark(text):
