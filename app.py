@@ -38,7 +38,7 @@ def save_message(text):
 def find_message(text):
   db = get_db()
   regx = re.compile(".*" + text + ".*", re.IGNORECASE)
-  return db.messages.find_one('text': {$regex: regx} }, sort=[('timestamp', -1)])
+  return db.messages.find_one('text': {$regex: regx}, sort=[('timestamp', -1)])
 
 # Returns the MongoDB instance
 def get_db():
