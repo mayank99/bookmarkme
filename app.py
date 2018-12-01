@@ -23,8 +23,7 @@ def webhook():
     sender = data['name']
 
     if text.startswith(os.getenv('TRIGGER_ADD')):
-      add_bookmark(sender, text)
-      msg = 'Saved. 🎉'
+      msg = add_bookmark(sender, text)
     elif text.startswith(os.getenv('TRIGGER_SHOW')):
       bookmark = find_bookmark(text)
       msg = bookmark['name'] + ": " + bookmark['text']
@@ -54,6 +53,7 @@ def add_bookmark(sender, full_text):
 
   doc = { 'text': text, 'name': name, 'timestamp': str(time.time()) }
   db.saved.insert_one(doc)
+  return 'Saved. 🎉'
 
 # Extracts relevant text and finds the latest bookmark that contains the given text
 def find_bookmark(full_text):
