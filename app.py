@@ -42,10 +42,17 @@ def webhook():
 
 # Extracts relevant text and saves to db
 def add_bookmark(sender, full_text):
-  text = full_text[len(os.getenv('TRIGGER_ADD')) + 1:]
-  # save_message(text)
   db = get_db()
-  doc = { 'text': text, 'name': sender, 'timestamp': str(time.time()) }
+  text = full_text[len(os.getenv('TRIGGER_ADD')) + 1:]
+  name = sender
+  if text.startswith("\""):
+    text = text[1:-1]
+  else: # save a previously sent message
+    message = find_message(text)
+    text = message['text']
+    name = message['name']
+
+  doc = { 'text': text, 'name': name, 'timestamp': str(time.time()) }
   db.saved.insert_one(doc)
 
 # Extracts relevant text and finds the latest bookmark that contains the given text
