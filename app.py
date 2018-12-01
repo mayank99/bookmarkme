@@ -28,6 +28,11 @@ def webhook():
   send_message(msg)
   return "ok", 200
 
+# Extracts relevant text and saves to db
+def add_bookmark(full_text):
+  text = full_text[len(os.getenv('TRIGGER_ADD')) + 1:]
+  save_message(text)
+
 # Add message to database, deleting all the ones older than 24h
 def save_message(text):
   db = get_db()
