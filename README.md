@@ -17,11 +17,14 @@ If you don't need a bookmark anymore, you can delete it by using `:delete <text>
 
 ## Add the BookmarkMe bot to your own chat
 There are a few simple steps involved here.
-1. Deploy the app to Heroku using the button below. Give it a memorable name; we will need it later.
+1. Deploy the app to Heroku using the button below. Give it a memorable app name; we will need it later. (You'll see a temporary BOT_ID but we will change that later.)
 
     [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-2. Create a bot user at the [GroupMe dev site](https://dev.groupme.com/bots). Assign it to the chat you want to add it, give it a name and an [optional] avatar, and for the callback URL, use **https://`<name>`.herokuapp.com** where `<name>` corresponds to the name you used in step #1.
+2. Create a bot user at the [GroupMe dev site](https://dev.groupme.com/bots). Assign it to the chat you want to add it, give it a name and an [optional] avatar, and for the callback URL, use **https://`<app-name>`.herokuapp.com** where `<app-name>` corresponds to the app name you used in step #1. Also remember the name you used for your bot.
 3. Now copy the "bot ID" field on the GroupMe dev site.
 4. Go to your app dashboard on Heroku (clicking "Manage" when the install finishes in step #1) and in the settings tab, change the config variable `BOT_ID` from default to the value you copied in step #3.
-5. (Optional) You can change the default values of the other variables in the list. `BOT_NAME` is the name of the bot, and the others are commands to trigger the bot.
+5. You can change the default values of the other variables in the list if you want. `BOT_NAME` is the name of the bot, and the others are commands to trigger the bot. Make sure the `BOT_NAME` is the same as what you entered on the GroupMe dev site in step #2.
 6. Once you're done creating the Heroku instance, you should be good to go. Note that you will need a credit card attached to your account to deploy the database, but since it uses the free plan, there will never be any charge.
+
+## License
+The MIT License
