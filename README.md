@@ -1,4 +1,4 @@
-![BookmarkMe](https://snag.gy/kNK3rY.jpg)
+![BookmarkMe](https://snag.gy/egnC4A.jpg)
 BookmarkMe is a GroupMe chatbot that allows you to bookmark messages for future reference. It is a simple Flask app deployed to Heroku and uses MongoDB for saving bookmarks.
 
 ## Usage
