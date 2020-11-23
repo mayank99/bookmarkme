@@ -24,7 +24,7 @@ There are a few simple steps involved here.
 3. Now copy the "bot ID" field on the GroupMe dev site.
 4. Go to your app dashboard on Heroku (clicking "Manage" when the install finishes in step #1) and in the settings tab, change the config variable `BOT_ID` from default to the value you copied in step #3.
 5. You can change the default values of the other variables in the list if you want. `BOT_NAME` is the name of the bot, and the others are commands to trigger the bot. Make sure the `BOT_NAME` is the same as what you entered on the GroupMe dev site in step #2.
-6. Once you're done creating the Heroku instance, you should be good to go. Note that you will need a credit card attached to your account to deploy the database, but since it uses the free plan, there will never be any charge.
+6. Once you're done creating the Heroku instance, you just need to attach a database to it. Create a config var (in Heroku settings) with `MONGODB_URI` as the key and your database url as the value. It's upto you which MongoDB service you want to use but the official [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) might be good enough.
 
 ## License
 The MIT License
